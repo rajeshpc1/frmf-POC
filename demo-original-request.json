@@ -1,0 +1,14 @@
+{
+  "id": "demo-original-001",
+  "timestamp": "2025-11-07T02:00:00Z",
+  "ingestion_source": "api_gateway",
+  "feature_request": {
+    "title": "AI-Powered Supply Chain Optimization Platform",
+    "description": "Develop an intelligent supply chain management system using machine learning to predict demand, optimize inventory levels, and automate procurement decisions. The platform should integrate with existing ERP systems and provide real-time analytics dashboards for supply chain visibility.",
+    "priority": "high",
+    "category": "optimization",
+    "business_justification": "Reduce supply chain costs by 15-20% and improve delivery times through predictive analytics",
+    "stakeholders": ["supply_chain", "data_science", "procurement"],
+    "estimated_timeline": "8-12 months"
+  }
+}

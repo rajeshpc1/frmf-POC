@@ -1,0 +1,18 @@
+# -*-perl-*-
+
+package.FRLMCDK = {
+    interfaces = (1.0);
+
+    build-system = cdk-build;
+    build-tools = {
+        1.0 = {
+            CDKBuild = 4.x;
+            NodeJS = default;
+            NpmPrettyMuch = 1.1;
+
+            # Having the Lambda package as a dependency to allow this package to be rebuilt when
+            # the Lambda code changes, and thus update the Lambda function version.
+            FRLM = 1.0;
+        };
+    };
+};

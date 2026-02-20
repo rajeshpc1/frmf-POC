@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Feature Request Management Framework (FRMF)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; }
+        .header { background: #232f3e; color: white; padding: 20px 0; }
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header h1 { font-size: 24px; margin-bottom: 5px; }
+        .header p { color: #aaa; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .tabs { display: flex; background: white; border-radius: 8px 8px 0 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .tab { padding: 15px 25px; cursor: pointer; border: none; background: none; font-size: 16px; border-bottom: 3px solid transparent; }
+        .tab.active { border-bottom-color: #ff9900; color: #ff9900; font-weight: 600; }
+        .tab-content { display: none; background: white; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .tab-content.active { display: block; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+        textarea { resize: vertical; min-height: 100px; }
+        .btn { background: #ff9900; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: 600; }
+        .btn:hover { background: #e88900; }
+        .btn-secondary { background: #6c757d; }
+        .btn-secondary:hover { background: #5a6268; }
+        .result { margin-top: 20px; padding: 15px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .legal-disclaimer { background: #e9ecef; padding: 15px; border-radius: 4px; margin: 15px 0; font-size: 13px; }
+        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin: 15px 0; }
+        .checkbox-group input[type="checkbox"] { width: auto; margin-top: 3px; }
+        .request-item { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin-bottom: 15px; }
+        .request-header { display: flex; justify-content: between; align-items: flex-start; margin-bottom: 10px; }
+        .request-title { font-weight: 600; font-size: 18px; color: #333; flex: 1; }
+        .forecast-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-left: 10px; }
+        .forecast-submitted { background: #e3f2fd; color: #1976d2; }
+        .forecast-reviewed { background: #f3e5f5; color: #7b1fa2; }
+        .forecast-1yr { background: #e8f5e8; color: #2e7d32; }
+        .forecast-2yr { background: #fff3e0; color: #f57c00; }
+        .forecast-3yr { background: #ffebee; color: #c62828; }
+        .forecast-archived { background: #f5f5f5; color: #616161; }
+        .request-meta { display: flex; gap: 15px; margin: 10px 0; font-size: 14px; color: #666; }
+        .priority { padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .priority.critical { background: #ffebee; color: #c62828; }
+        .priority.high { background: #fff3e0; color: #f57c00; }
+        .priority.medium { background: #e8f5e8; color: #2e7d32; }
+        .priority.low { background: #e3f2fd; color: #1976d2; }
+        .search-form { display: flex; gap: 10px; margin-bottom: 20px; }
+        .search-form input { flex: 1; }
+        .workaround-section { background: #e8f4fd; border: 1px solid #bee5eb; border-radius: 4px; padding: 15px; margin-top: 10px; }
+        .workaround-title { font-weight: 600; color: #0c5460; margin-bottom: 8px; }
+        .loading { text-align: center; padding: 40px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>AWS Feature Request Management Framework (FRMF)</h1>
+            <p>Submit and track feature requests with transparent forecasting</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('submit')">Submit Request</button>
+            <button class="tab" onclick="showTab('track')">Track My Requests</button>
+            <button class="tab" onclick="showTab('search')">Browse All Requests</button>
+        </div>
+
+        <!-- Submit Request Tab -->
+        <div id="submit" class="tab-content active">
+            <h2>Submit Feature Request</h2>
+            <p style="margin-bottom: 20px; color: #666;">Submit your feature request and receive AI-powered analysis with implementation forecasting.</p>
+            
+            <form id="submitForm">
+                <div class="form-group">
+                    <label for="title">Feature Title *</label>
+                    <input type="text" id="title" required placeholder="Brief, descriptive title for your feature request">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Detailed Description *</label>
+                    <textarea id="description" required placeholder="Describe the feature, use case, and business value. Include any technical requirements or constraints."></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 20px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="priority">Business Priority *</label>
+                        <select id="priority" required>
+                            <option value="">Select Priority</option>
+                            <option value="critical">Critical - Blocking business operations</option>
+                            <option value="high">High - Significant business impact</option>
+                            <option value="medium">Medium - Moderate business value</option>
+                            <option value="low">Low - Nice to have enhancement</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 1;">
+                        <label for="category">Category *</label>
+                        <select id="category" required>
+                            <option value="">Select Category</option>
+                            <option value="compute">Compute (EC2, Lambda, ECS)</option>
+                            <option value="storage">Storage (S3, EBS, EFS)</option>
+                            <option value="networking">Networking (VPC, CloudFront, Route53)</option>
+                            <option value="database">Database (RDS, DynamoDB, Aurora)</option>
+                            <option value="analytics">Analytics (Athena, Redshift, EMR)</option>
+                            <option value="ai_ml">AI/ML (SageMaker, Bedrock, Rekognition)</option>
+                            <option value="security">Security (IAM, KMS, GuardDuty)</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="legal-disclaimer">
+                    <strong>Important Legal Notice:</strong> All feature request submissions and provided forecasts are non-binding preliminary information only. AWS makes no commitments regarding feature implementation, timelines, or availability. Forecasts are best-effort estimates based on current information and may change without notice. By submitting this request, you acknowledge that AWS has no obligation to implement the requested feature.
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="legalAccept" required>
+                    <label for="legalAccept">I acknowledge and accept that all forecasts are non-binding estimates and AWS makes no commitments regarding feature implementation or timelines.</label>
+                </div>
+                
+                <button type="submit" class="btn">Submit Feature Request</button>
+            </form>
+            
+            <div id="submitResult" class="result"></div>
+        </div>
+
+        <!-- Track Requests Tab -->
+        <div id="track" class="tab-content">
+            <h2>Track My Requests</h2>
+            <p style="margin-bottom: 20px; color: #666;">View the status and forecasts for your submitted feature requests.</p>
+            
+            <div class="form-group">
+                <label for="customerEmail">Your Email Address</label>
+                <input type="email" id="customerEmail" placeholder="Enter your email to view your requests">
+                <button onclick="loadMyRequests()" class="btn" style="margin-top: 10px;">Load My Requests</button>
+            </div>
+            
+            <div id="myRequestsResults"></div>
+        </div>
+
+        <!-- Browse All Tab -->
+        <div id="search" class="tab-content">
+            <h2>Browse Feature Requests</h2>
+            <p style="margin-bottom: 20px; color: #666;">Search and browse all feature requests to see what others have requested.</p>
+            
+            <div class="search-form">
+                <input type="text" id="searchQuery" placeholder="Search by title, description, or category...">
+                <button onclick="searchRequests()" class="btn">Search</button>
+                <button onclick="loadAllRequests()" class="btn btn-secondary">Load All</button>
+            </div>
+            
+            <div id="searchResults"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Update with your API Gateway URL
+        const API_BASE_URL = 'https://pcemuqqvxi.execute-api.us-west-2.amazonaws.com/prod';
+        
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        document.getElementById('submitForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                priority: document.getElementById('priority').value,
+                category: document.getElementById('category').value,
+                legal_disclaimer_accepted: document.getElementById('legalAccept').checked,
+                ingestion_source: 'frmf_portal',
+                customer_email: 'anonymous@example.com' // In real implementation, use authentication
+            };
+            
+            const resultDiv = document.getElementById('submitResult');
+            resultDiv.innerHTML = '<div class="loading">Submitting request and generating AI forecast...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/data`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>Feature Request Submitted Successfully!</h3>
+                            <p><strong>Request ID:</strong> ${result.id}</p>
+                            <p><strong>Status:</strong> Your request has been submitted and will be processed by our AI system for classification and forecasting.</p>
+                            <p><strong>Next Steps:</strong> You will receive AI-generated analysis including implementation timeline estimates within 5 minutes. Check the "Track My Requests" tab to view updates.</p>
+                        </div>
+                    `;
+                    document.getElementById('submitForm').reset();
+                } else {
+                    resultDiv.innerHTML = `<div class="error">Error: ${result.error || 'Failed to submit request'}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">Network error: ${error.message}</div>`;
+            }
+        });
+
+        async function loadMyRequests() {
+            const email = document.getElementById('customerEmail').value;
+            if (!email) {
+                alert('Please enter your email address');
+                return;
+            }
+            
+            const resultsDiv = document.getElementById('myRequestsResults');
+            resultsDiv.innerHTML = '<div class="loading">Loading your requests...</div>';
+            
+            try {
+                // In real implementation, this would filter by authenticated user
+                const response = await fetch(`${API_BASE_URL}/search?customer_email=${encodeURIComponent(email)}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayMyRequests(data.results || [], data.total || 0);
+                } else {
+                    resultsDiv.innerHTML = `<div class="error">Failed to load requests: ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">Error loading requests: ${error.message}</div>`;
+            }
+        }
+
+        async function searchRequests() {
+            const query = document.getElementById('searchQuery').value;
+            const resultsDiv = document.getElementById('searchResults');
+            
+            resultsDiv.innerHTML = '<div class="loading">Searching...</div>';
+            
+            try {
+                const url = query ? `${API_BASE_URL}/search?q=${encodeURIComponent(query)}` : `${API_BASE_URL}/search`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displaySearchResults(data.results || [], data.total || 0);
+                } else {
+                    resultsDiv.innerHTML = `<div class="error">Search failed: ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">Search error: ${error.message}</div>`;
+            }
+        }
+
+        async function loadAllRequests() {
+            document.getElementById('searchQuery').value = '';
+            await searchRequests();
+        }
+
+        function displayMyRequests(results, total) {
+            const resultsDiv = document.getElementById('myRequestsResults');
+            
+            if (!results || results.length === 0) {
+                resultsDiv.innerHTML = '<div class="warning">No requests found for this email address.</div>';
+                return;
+            }
+            
+            let html = `<h3>Your Feature Requests (${total})</h3>`;
+            
+            results.forEach(request => {
+                html += createRequestCard(request, true);
+            });
+            
+            resultsDiv.innerHTML = html;
+        }
+
+        function displaySearchResults(results, total) {
+            const resultsDiv = document.getElementById('searchResults');
+            
+            if (!results || results.length === 0) {
+                resultsDiv.innerHTML = '<div class="warning">No requests found matching your search.</div>';
+                return;
+            }
+            
+            let html = `<h3>Found ${total} requests</h3>`;
+            
+            results.forEach(request => {
+                html += createRequestCard(request, false);
+            });
+            
+            resultsDiv.innerHTML = html;
+        }
+
+        function createRequestCard(request, showPersonal) {
+            const forecastStatus = request.forecast_status || 'submitted';
+            const forecastTimeline = request.forecast_timeline || 'TBD';
+            const workaroundAvailable = request.workaround_available || false;
+            
+            return `
+                <div class="request-item">
+                    <div class="request-header">
+                        <div class="request-title">${escapeHtml(request.title)}</div>
+                        <div class="forecast-badge forecast-${forecastStatus}">
+                            ${forecastStatus.toUpperCase()} ${forecastTimeline !== 'TBD' ? '(' + forecastTimeline + ')' : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="request-meta">
+                        <span class="priority ${request.priority}">${request.priority?.toUpperCase()}</span>
+                        <span>Category: ${request.category}</span>
+                        <span>Submitted: ${formatDate(request.timestamp)}</span>
+                        <span>ID: ${request.id}</span>
+                        ${request.forecast_confidence ? `<span>Confidence: ${Math.round(request.forecast_confidence * 100)}%</span>` : ''}
+                    </div>
+                    
+                    <div style="margin: 10px 0;">${escapeHtml(request.description)}</div>
+                    
+                    ${request.ai_tags ? `<div style="margin: 10px 0;"><strong>AI Tags:</strong> ${JSON.parse(request.ai_tags || '[]').join(', ')}</div>` : ''}
+                    
+                    ${workaroundAvailable ? `
+                        <div class="workaround-section">
+                            <div class="workaround-title">🔧 Workaround Available</div>
+                            <div>${escapeHtml(request.workaround_text || 'Contact support for workaround details.')}</div>
+                        </div>
+                    ` : ''}
+                    
+                    ${request.forecast_reasoning ? `
+                        <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 4px; font-size: 14px;">
+                            <strong>Forecast Reasoning:</strong> ${escapeHtml(request.forecast_reasoning)}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(timestamp) {
+            return new Date(timestamp).toLocaleString();
+        }
+
+        // Auto-load some sample data on page load
+        window.addEventListener('load', () => {
+            // Auto-search to show some sample data
+            setTimeout(() => {
+                if (document.getElementById('search').classList.contains('active')) {
+                    loadAllRequests();
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

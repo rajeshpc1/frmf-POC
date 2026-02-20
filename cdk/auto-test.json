@@ -1,0 +1,11 @@
+{
+  "id": "auto-test-789",
+  "timestamp": "2024-10-16T22:55:00Z",
+  "ingestion_source": "auto_test",
+  "feature_request": {
+    "title": "Voice Commands",
+    "description": "Add voice control for accessibility",
+    "priority": "medium",
+    "category": "accessibility"
+  }
+}

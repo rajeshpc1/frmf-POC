@@ -1,0 +1,10 @@
+{
+  "Records": [
+    {
+      "s3": {
+        "bucket": { "name": "bt101-raw-data-alpha-012258635969" },
+        "object": { "key": "year=2024/month=10/day=16/auto-test-789.json" }
+      }
+    }
+  ]
+}

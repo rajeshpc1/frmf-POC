@@ -1,0 +1,14 @@
+{
+  "id": "test-original-001",
+  "timestamp": "2025-12-04T22:00:00Z",
+  "ingestion_source": "api_gateway",
+  "feature_request": {
+    "title": "Real-Time Customer Analytics Dashboard",
+    "description": "Build a comprehensive analytics platform that provides real-time insights into customer behavior, purchase patterns, and engagement metrics. Include predictive analytics for customer lifetime value and churn prediction with interactive visualizations.",
+    "priority": "medium",
+    "category": "analytics",
+    "business_justification": "Improve customer retention by 25% and increase revenue per customer through data-driven insights",
+    "stakeholders": ["marketing", "data_analytics", "product"],
+    "estimated_timeline": "6-9 months"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "test-claude-123",
+  "timestamp": "2024-10-16T22:50:00Z",
+  "ingestion_source": "manual_test",
+  "feature_request": {
+    "title": "AI Voice Assistant",
+    "description": "Implement voice commands for hands-free navigation and control",
+    "priority": "high",
+    "category": "ai"
+  }
+}
