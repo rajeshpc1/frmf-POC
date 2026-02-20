@@ -132,7 +132,7 @@ ax.text(13, 1.5, '~200ms', fontsize=8, ha='center', color='gray', style='italic'
 features_box = FancyBboxPatch((0.5, 0.2), 6, 1.2, boxstyle="round,pad=0.1", 
                              facecolor=light_gray, edgecolor=aws_blue, linewidth=1)
 ax.add_patch(features_box)
-ax.text(3.5, 1, '🎯 Key Features', fontsize=12, fontweight='bold', ha='center', color=aws_blue)
+ax.text(3.5, 1, 'Key Features', fontsize=12, fontweight='bold', ha='center', color=aws_blue)
 ax.text(3.5, 0.6, '• AI-Powered Classification & Forecasting\n• Semantic Duplicate Detection (90% accuracy)\n• Complete Audit Trail & Legal Compliance', 
         fontsize=9, ha='center', va='center', color=aws_blue)
 
@@ -140,7 +140,7 @@ ax.text(3.5, 0.6, '• AI-Powered Classification & Forecasting\n• Semantic Dup
 perf_box = FancyBboxPatch((7.5, 0.2), 7.5, 1.2, boxstyle="round,pad=0.1", 
                          facecolor=light_gray, edgecolor=aws_blue, linewidth=1)
 ax.add_patch(perf_box)
-ax.text(11.25, 1, '⚡ Performance Metrics', fontsize=12, fontweight='bold', ha='center', color=aws_blue)
+ax.text(11.25, 1, 'Performance Metrics', fontsize=12, fontweight='bold', ha='center', color=aws_blue)
 ax.text(11.25, 0.6, '• End-to-End Processing: ~7 seconds\n• 25+ AI-Enhanced Fields Generated\n• Production-Ready Serverless Architecture', 
         fontsize=9, ha='center', va='center', color=aws_blue)
 
@@ -149,5 +149,5 @@ plt.savefig('/home/rajeshpc/workplace/BT101-clean/FRMF_Architecture_Diagram.png'
             dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
 plt.show()
 
-print("✅ FRMF Architecture Diagram saved as: FRMF_Architecture_Diagram.png")
-print("📊 Diagram shows complete production-ready pipeline with all Lambda functions and data flow")
+print("FRMF Architecture Diagram saved as: FRMF_Architecture_Diagram.png")
+print("Diagram shows complete production-ready pipeline with all Lambda functions and data flow")

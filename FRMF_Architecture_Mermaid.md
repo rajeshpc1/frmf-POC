@@ -5,23 +5,23 @@ Copy the code below and paste it into https://mermaid.live to generate the archi
 ```mermaid
 graph TD
     %% Customer Interface
-    A[🌐 Customer Portal<br/>FRMF UI] --> B[🚪 API Gateway<br/>/data POST<br/>~100ms]
+    A[ Customer Portal<br/>FRMF UI] --> B[ API Gateway<br/>/data POST<br/>~100ms]
     
     %% Ingestion Layer
-    B --> C[⚡ Ingestion Lambda<br/>bt101-ingestion-alpha<br/>~150ms]
+    B --> C[ Ingestion Lambda<br/>bt101-ingestion-alpha<br/>~150ms]
     
     %% Raw Data Storage
-    C --> D[📦 Raw Data Lake S3<br/>bt101-raw-data-alpha<br/>JSON Storage]
+    C --> D[ Raw Data Lake S3<br/>bt101-raw-data-alpha<br/>JSON Storage]
     
     %% S3 Event Trigger
-    D -->|S3 Event Trigger<br/>ObjectCreated| E[🎯 Processing Lambda<br/>bt101-processing-alpha<br/>Orchestrator<br/>~7s total]
+    D -->|S3 Event Trigger<br/>ObjectCreated| E[ Processing Lambda<br/>bt101-processing-alpha<br/>Orchestrator<br/>~7s total]
     
     %% AI Processing Layer
-    E --> F[🤖 AI Classification<br/>bt101-claude-classification-alpha<br/>Claude 3 Haiku<br/>~3.2s]
-    E --> G[🔍 AI Deduplication<br/>bt101-claude-deduplication-alpha<br/>Semantic Matching<br/>~2.4s]
+    E --> F[ AI Classification<br/>bt101-claude-classification-alpha<br/>Claude 3 Haiku<br/>~3.2s]
+    E --> G[ AI Deduplication<br/>bt101-claude-deduplication-alpha<br/>Semantic Matching<br/>~2.4s]
     
     %% Enhanced Data Storage
-    F --> H[📊 Enhanced Data Lake S3<br/>bt101-parquet-data-alpha<br/>Parquet + AI Analysis<br/>25+ Fields]
+    F --> H[ Enhanced Data Lake S3<br/>bt101-parquet-data-alpha<br/>Parquet + AI Analysis<br/>25+ Fields]
     G --> H
     E --> H
     
