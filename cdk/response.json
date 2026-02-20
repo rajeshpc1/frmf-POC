@@ -1,8 +1,0 @@
-{
-  "statusCode": 200,
-  "body": {
-    "message": "Enhanced processing successful",
-    "parquet_file": "year=2024/month=10/day=16/test-final-456.parquet",
-    "ai_enhanced": true
-  }
-}
